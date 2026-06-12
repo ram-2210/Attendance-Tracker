@@ -3,51 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance & Payroll Tracker</title>
+    <title>Field Service System - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-light d-flex align-items-center min-vh-100">
 
-<div class="container">
-    <div id="loginScreen">
-        <h2>Login</h2>
-        <input type="text" id="username" placeholder="Enter Username (e.g., Ramkumar or admin)">
-        <select id="role">
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-        </select>
-        <button onclick="login()">Login</button>
-    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5 col-lg-4">
+                <div class="card shadow-sm border-0 pinned-card">
+                    <div class="card-body p-4 text-center">
+                        <img src="assets/images/logo.png" alt="Company Logo" class="mb-3 img-fluid" style="max-height: 60px; fallback: url('https://via.placeholder.com/150x60?text=Field+Service');" onerror="this.src='https://via.placeholder.com/150x60?text=Field+Service'">
+                        
+                        <h4 class="card-title mb-4 fw-bold text-secondary">Sign In</h4>
+                        
+                        <form id="loginForm" novalidate>
+                            <div class="mb-3 text-start">
+                                <label for="username" class="form-label small fw-semibold text-muted">Username or Email</label>
+                                <input type="text" class="form-control" id="username" required placeholder="Enter your username">
+                            </div>
+                            
+                            <div class="mb-3 text-start">
+                                <label for="password" class="form-label small fw-semibold text-muted">Password</label>
+                                <input type="password" class="form-control" id="password" required placeholder="••••••••">
+                            </div>
 
-    <div id="userDashboard" class="hidden">
-        <h2>Employee Dashboard</h2>
-        <div class="profile-card">
-            <p><strong>Name:</strong> <span id="profileName"></span></p>
-            <p><strong>Role:</strong> <span id="profileRole"></span></p>
-            <p><strong>Workplace:</strong> Tech Dept</p>
+                            <div class="mb-4 text-start">
+                                <label for="role" class="form-label small fw-semibold text-muted">Portal Access</label>
+                                <select class="form-select" id="role" required>
+                                    <option value="" disabled selected>Select your role...</option>
+                                    <option value="admin">Administrator</option>
+                                    <option value="worker">Field Worker</option>
+                                    <option value="customer">Customer Portal</option>
+                                </select>
+                            </div>
+
+                            <div id="loginErrorMessage" class="alert alert-danger d-none small py-2" role="alert">
+                                Invalid credentials. Please try again.
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
+                                Authenticate
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="text-center mt-3 text-muted small">
+                    &copy; 2026 Field Service System. All rights reserved.
+                </div>
+            </div>
         </div>
-        
-        <p><strong>Status:</strong> <span id="workStatus">Not Clocked In</span></p>
-        <button onclick="clockIn()" id="btnIn">Clock In</button>
-        <button onclick="clockOut()" id="btnOut" class="hidden" class="btn-danger">Clock Out</button>
-        
-        <div id="salaryReport" class="hidden">
-            <h3>Today's Report</h3>
-            <p>Total Hours: <span id="totalHours">0</span></p>
-            <p>Overtime: <span id="overtimeHours">0</span></p>
-            <p><strong>Total Salary: ₹<span id="totalSalary">0</span></strong></p>
-        </div>
-        <button onclick="logout()" class="btn-secondary">Logout</button>
     </div>
 
-    <div id="adminDashboard" class="hidden">
-        <h2>Admin Dashboard</h2>
-        <p>Welcome, Admin. System is running smoothly.</p>
-        <p><em>(In a real setup, employee data logs would generate here)</em></p>
-        <button onclick="logout()" class="btn-secondary">Logout</button>
-    </div>
-</div>
-
-<script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>
