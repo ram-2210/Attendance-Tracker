@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Worker Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* CSS specifically for hiding/showing the form slides */
+        .step { display: none; }
+        .step.active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Worker Dashboard</h2>
+            <button onclick="logout()" class="btn-secondary" style="width: auto; padding: 5px 15px;">Logout</button>
+        </div>
+        <hr>
+
+        <form id="workerForm">
+            
+            <div class="step active" id="step1">
+                <h3>Slide 1: Shift Start & Location</h3>
+                <button type="button" onclick="clockIn()" id="btnIn">Clock In (09:00 AM)</button>
+                <p>Status: <span id="clockInStatus" style="color: red;">Not Clocked In</span></p>
+                
+                <hr>
+                <label>Places of Visit:</label>
+                <div id="locationContainer">
+                    <input type="text" name="location1" placeholder="Location 1 (e.g., Downtown Office)" required>
+                </div>
+                <button type="button" class="btn-secondary" onclick="addLocation()">+ Add Another Location</button>
+                
+                <button type="button" onclick="nextStep(2)" style="margin-top: 20px;">Next Slide &raquo;</button>
+            </div>
+
+            <div class="step" id="step2">
+                <h3>Slide 2: Work Details</h3>
+                <label>Process Category:</label>
+                <select id="workCategory" onchange="toggleWorkOptions()" required>
+                    <option value="">Select Category...</option>
+                    <option value="service">Service</option>
+                    <option value="supply">Supply</option>
+                </select>
+
+                <div id="serviceOptions" class="hidden">
+                    <label>Service Type:</label>
+                    <select name="serviceType">
+                        <option value="machine">Machine Service</option>
+                        <option value="ro">RO Service</option>
+                    </select>
+                </div>
+
+                <div id="supplyOptions" class="hidden">
+                    <label>Supply Type:</label>
+                    <select name="supplyType">
+                        <option value="delivery">Normal Delivery</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" onclick="prevStep(1)" class="btn-secondary">&laquo; Back</button>
+                    <button type="button" onclick="nextStep(3)">Next Slide &raquo;</button>
+                </div>
+            </div>
+
+            <div class="step" id="step3">
+                <h3>Slide 3: Activity & Breaks</h3>
+                <label>Break Time Taken:</label>
+                <select name="breakType">
+                    <option value="none">No Break</option>
+                    <option value="tea">Tea Break</option>
+                    <option value="lunch">Lunch Break</option>
+                </select>
+
+                <label>Work Description:</label>
+                <textarea rows="4" placeholder="Describe the work completed today (service performed or supplies delivered)..." required></textarea>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" onclick="prevStep(2)" class="btn-secondary">&laquo; Back</button>
+                    <button type="button" onclick="nextStep(4)">Next Slide &raquo;</button>
+                </div>
+            </div>
+
+            <div class="step" id="step4">
+                <h3>Slide 4: Uploads & Checkout</h3>
+                
+                <label>Work/Purchase Image:</label>
+                <input type="file" name="workImage" accept="image/*">
+                
+                <label>Final Bill Image:</label>
+                <input type="file" name="billImage" accept="image/*">
+                
+                <hr>
+                <button type="button" onclick="clockOut()" id="btnOut" class="btn-danger">Clock Out</button>
+                <p>Checkout Status: <span id="clockOutStatus" style="color: red;">Pending</span></p>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" onclick="prevStep(3)" class="btn-secondary">&laquo; Back</button>
+                    <button type="submit" id="submitBtn" style="background-color: #007bff;">Submit Daily Report</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/worker-form.js"></script>
+</body>
+</html>

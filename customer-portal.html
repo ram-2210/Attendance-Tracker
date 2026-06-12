@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Portal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Customer Portal</h2>
+            <button onclick="logout()" class="btn-secondary" style="width: auto; padding: 5px 15px;">Logout</button>
+        </div>
+        
+        <hr>
+
+        <h3>Advance Order Request</h3>
+        <form id="orderForm">
+            <label>Select Requirement:</label>
+            <select id="serviceRequest" required>
+                <option value="">Choose an option...</option>
+                <option value="continuous_supply">Continuous Supply</option>
+                <option value="machine_service">Machine Service</option>
+                <option value="ro_service">RO Service</option>
+            </select>
+
+            <label>Product Requirements & Details:</label>
+            <textarea rows="3" placeholder="Please specify the products you need..." required></textarea>
+
+            <button type="submit">Submit Request</button>
+        </form>
+
+        <hr>
+
+        <h3>Service Feedback</h3>
+        <form id="feedbackForm">
+            <label>Rate your recent service:</label>
+            <select id="rating" required>
+                <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
+                <option value="4">⭐⭐⭐⭐ - Good</option>
+                <option value="3">⭐⭐⭐ - Average</option>
+                <option value="2">⭐⭐ - Poor</option>
+                <option value="1">⭐ - Terrible</option>
+            </select>
+
+            <label>Comments:</label>
+            <textarea rows="3" placeholder="Tell us how the field worker did..." required></textarea>
+
+            <button type="submit" style="background-color: #17a2b8;">Submit Feedback</button>
+        </form>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/customer-panel.js"></script>
+</body>
+</html>
