@@ -1,0 +1,65 @@
+body { 
+    font-family: Arial, sans-serif; 
+    background-color: #f4f4f9; 
+    padding: 20px; 
+}
+
+.container { 
+    max-width: 500px; 
+    margin: auto; 
+    background: white; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+}
+
+h2 { 
+    text-align: center; 
+}
+
+input, select, button { 
+    width: 100%; 
+    padding: 10px; 
+    margin: 10px 0; 
+    box-sizing: border-box; 
+}
+
+button { 
+    background-color: #28a745; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    font-size: 16px; 
+}
+
+button:hover { 
+    background-color: #218838; 
+}
+
+/* New CSS classes to replace inline styles */
+.btn-danger {
+    background-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.hidden { 
+    display: none; 
+}
+
+.profile-card { 
+    background: #e9ecef; 
+    padding: 15px; 
+    border-radius: 5px; 
+    margin-bottom: 15px; 
+}

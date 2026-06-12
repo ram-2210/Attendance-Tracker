@@ -4,16 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance & Payroll Tracker</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; }
-        .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h2 { text-align: center; }
-        input, select, button { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
-        button { background-color: #28a745; color: red; border: none; cursor: pointer; font-size: 16px; }
-        button:hover { background-color: #218838; }
-        .hidden { display: none; }
-        .profile-card { background: #e9ecef; padding: 15px; border-radius: 5px; margin-bottom: 15px; }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -38,7 +29,7 @@
         
         <p><strong>Status:</strong> <span id="workStatus">Not Clocked In</span></p>
         <button onclick="clockIn()" id="btnIn">Clock In</button>
-        <button onclick="clockOut()" id="btnOut" class="hidden" style="background-color: #dc3545;">Clock Out</button>
+        <button onclick="clockOut()" id="btnOut" class="hidden" class="btn-danger">Clock Out</button>
         
         <div id="salaryReport" class="hidden">
             <h3>Today's Report</h3>
@@ -46,88 +37,17 @@
             <p>Overtime: <span id="overtimeHours">0</span></p>
             <p><strong>Total Salary: ₹<span id="totalSalary">0</span></strong></p>
         </div>
-        <button onclick="logout()" style="background-color: #6c757d;">Logout</button>
+        <button onclick="logout()" class="btn-secondary">Logout</button>
     </div>
 
     <div id="adminDashboard" class="hidden">
         <h2>Admin Dashboard</h2>
         <p>Welcome, Admin. System is running smoothly.</p>
         <p><em>(In a real setup, employee data logs would generate here)</em></p>
-        <button onclick="logout()" style="background-color: #6c757d;">Logout</button>
+        <button onclick="logout()" class="btn-secondary">Logout</button>
     </div>
 </div>
 
-<script>
-    // Configuration Variables
-    const hourlyRate = 500; 
-    const standardHours = 8;
-    const overtimeMultiplier = 1.5;
-
-    function login() {
-        const username = document.getElementById('username').value;
-        const role = document.getElementById('role').value;
-
-        if (!username) {
-            alert("Please enter a username");
-            return;
-        }
-
-        document.getElementById('loginScreen').classList.add('hidden');
-
-        if (role === 'admin') {
-            document.getElementById('adminDashboard').classList.remove('hidden');
-        } else {
-            document.getElementById('userDashboard').classList.remove('hidden');
-            document.getElementById('profileName').innerText = username;
-            document.getElementById('profileRole').innerText = role.toUpperCase();
-        }
-    }
-
-    function clockIn() {
-        localStorage.setItem('clockInTime', new Date().getTime());
-        document.getElementById('workStatus').innerText = "Clocked In";
-        document.getElementById('btnIn').classList.add('hidden');
-        document.getElementById('btnOut').classList.remove('hidden');
-    }
-
-    function clockOut() {
-        const clockInTime = localStorage.getItem('clockInTime');
-        if (!clockInTime) return;
-
-        const clockOutTime = new Date().getTime();
-        
-        // For testing purposes, we multiply by a high number to simulate hours passing quickly
-        // In reality, use: (clockOutTime - clockInTime) / (1000 * 60 * 60)
-        let hoursWorked = (clockOutTime - clockInTime) / 1000; // Simulated as seconds = hours for quick testing
-
-        let regularHours = Math.min(hoursWorked, standardHours);
-        let overtime = Math.max(0, hoursWorked - standardHours);
-
-        let baseSalary = regularHours * hourlyRate;
-        let overtimeSalary = overtime * (hourlyRate * overtimeMultiplier);
-        let finalSalary = baseSalary + overtimeSalary;
-
-        document.getElementById('totalHours').innerText = hoursWorked.toFixed(2);
-        document.getElementById('overtimeHours').innerText = overtime.toFixed(2);
-        document.getElementById('totalSalary').innerText = finalSalary.toFixed(2);
-
-        document.getElementById('workStatus').innerText = "Clocked Out";
-        document.getElementById('btnOut').classList.add('hidden');
-        document.getElementById('salaryReport').classList.remove('hidden');
-        
-        localStorage.removeItem('clockInTime'); // Reset
-    }
-
-    function logout() {
-        document.getElementById('loginScreen').classList.remove('hidden');
-        document.getElementById('userDashboard').classList.add('hidden');
-        document.getElementById('adminDashboard').classList.add('hidden');
-        document.getElementById('salaryReport').classList.add('hidden');
-        document.getElementById('btnIn').classList.remove('hidden');
-        document.getElementById('btnOut').classList.add('hidden');
-        document.getElementById('username').value = '';
-    }
-</script>
-
+<script src="js/script.js"></script>
 </body>
 </html>
