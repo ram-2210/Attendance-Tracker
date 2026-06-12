@@ -4,36 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Field Worker Dashboard</title>
-    <link rel="stylesheet" href="css/style.css">
     <style>
-        /* CSS specifically for hiding/showing the form slides */
-        .step { display: none; }
+        /* --- COMBINED CSS --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        h2, h3 { color: #2c3e50; margin-top: 0; }
+        hr { border: 0; height: 1px; background: #e0e0e0; margin: 20px 0; }
+        
+        label { display: block; font-weight: bold; margin: 15px 0 5px; color: #555; }
+        input[type="text"], input[type="file"], select, textarea {
+            width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc;
+            border-radius: 6px; box-sizing: border-box; font-family: inherit;
+        }
+        textarea { resize: vertical; }
+        
+        button {
+            width: 100%; padding: 12px; background-color: #28a745; color: white;
+            border: none; border-radius: 6px; cursor: pointer; font-size: 16px;
+            font-weight: bold; transition: background-color 0.3s ease; margin-top: 10px;
+        }
+        button:hover { background-color: #218838; }
+        
+        .btn-secondary { background-color: #6c757d; }
+        .btn-secondary:hover { background-color: #5a6268; }
+        .btn-danger { background-color: #dc3545; }
+        .btn-danger:hover { background-color: #c82333; }
+        .btn-primary { background-color: #007bff; }
+        .btn-primary:hover { background-color: #0056b3; }
+        
+        /* Multi-Step Form Logic */
+        .step { display: none; animation: fadeIn 0.4s ease-in-out; }
         .step.active { display: block; }
+        .hidden { display: none !important; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .button-group { display: flex; gap: 15px; margin-top: 20px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="flex-between">
             <h2>Worker Dashboard</h2>
-            <button onclick="logout()" class="btn-secondary" style="width: auto; padding: 5px 15px;">Logout</button>
+            <button onclick="logout()" class="btn-secondary" style="width: auto; padding: 8px 15px; margin-top: 0;">Logout</button>
         </div>
         <hr>
 
-        <form id="workerForm">
+        <form id="workerForm" onsubmit="submitForm(event)">
             
             <div class="step active" id="step1">
                 <h3>Slide 1: Shift Start & Location</h3>
-                <button type="button" onclick="clockIn()" id="btnIn">Clock In (09:00 AM)</button>
-                <p>Status: <span id="clockInStatus" style="color: red;">Not Clocked In</span></p>
+                <button type="button" onclick="clockIn()" id="btnIn" class="btn-primary">Clock In (09:00 AM)</button>
+                <p>Status: <span id="clockInStatus" style="color: #dc3545; font-weight: bold;">Not Clocked In</span></p>
                 
-                <hr>
                 <label>Places of Visit:</label>
                 <div id="locationContainer">
                     <input type="text" name="location1" placeholder="Location 1 (e.g., Downtown Office)" required>
                 </div>
-                <button type="button" class="btn-secondary" onclick="addLocation()">+ Add Another Location</button>
+                <button type="button" class="btn-secondary" onclick="addLocation()" style="font-size: 14px; padding: 8px;">+ Add Another Location</button>
                 
-                <button type="button" onclick="nextStep(2)" style="margin-top: 20px;">Next Slide &raquo;</button>
+                <button type="button" onclick="nextStep(2)" style="margin-top: 30px;">Next Slide &raquo;</button>
             </div>
 
             <div class="step" id="step2">
@@ -60,7 +107,7 @@
                     </select>
                 </div>
 
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <div class="button-group">
                     <button type="button" onclick="prevStep(1)" class="btn-secondary">&laquo; Back</button>
                     <button type="button" onclick="nextStep(3)">Next Slide &raquo;</button>
                 </div>
@@ -76,9 +123,9 @@
                 </select>
 
                 <label>Work Description:</label>
-                <textarea rows="4" placeholder="Describe the work completed today (service performed or supplies delivered)..." required></textarea>
+                <textarea rows="4" placeholder="Describe the work completed today..." required></textarea>
 
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <div class="button-group">
                     <button type="button" onclick="prevStep(2)" class="btn-secondary">&laquo; Back</button>
                     <button type="button" onclick="nextStep(4)">Next Slide &raquo;</button>
                 </div>
@@ -95,18 +142,81 @@
                 
                 <hr>
                 <button type="button" onclick="clockOut()" id="btnOut" class="btn-danger">Clock Out</button>
-                <p>Checkout Status: <span id="clockOutStatus" style="color: red;">Pending</span></p>
+                <p>Checkout Status: <span id="clockOutStatus" style="color: #dc3545; font-weight: bold;">Pending</span></p>
 
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <div class="button-group">
                     <button type="button" onclick="prevStep(3)" class="btn-secondary">&laquo; Back</button>
-                    <button type="submit" id="submitBtn" style="background-color: #007bff;">Submit Daily Report</button>
+                    <button type="submit" id="submitBtn" class="btn-primary">Submit Daily Report</button>
                 </div>
             </div>
 
         </form>
     </div>
 
-    <script src="js/auth.js"></script>
-    <script src="js/worker-form.js"></script>
+    <script>
+        /* --- COMBINED JAVASCRIPT --- */
+        function nextStep(stepNumber) {
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step' + stepNumber).classList.add('active');
+        }
+
+        function prevStep(stepNumber) {
+            nextStep(stepNumber); 
+        }
+
+        let locationCount = 1;
+        function addLocation() {
+            locationCount++;
+            const container = document.getElementById('locationContainer');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'location' + locationCount;
+            input.placeholder = 'Location ' + locationCount;
+            input.required = true;
+            container.appendChild(input);
+        }
+
+        function toggleWorkOptions() {
+            const category = document.getElementById('workCategory').value;
+            const serviceOpts = document.getElementById('serviceOptions');
+            const supplyOpts = document.getElementById('supplyOptions');
+
+            serviceOpts.classList.add('hidden');
+            supplyOpts.classList.add('hidden');
+
+            if (category === 'service') {
+                serviceOpts.classList.remove('hidden');
+            } else if (category === 'supply') {
+                supplyOpts.classList.remove('hidden');
+            }
+        }
+
+        function clockIn() {
+            const timeNow = new Date().toLocaleTimeString();
+            document.getElementById('clockInStatus').innerText = `Clocked In at ${timeNow}`;
+            document.getElementById('clockInStatus').style.color = '#28a745';
+            document.getElementById('btnIn').disabled = true;
+            document.getElementById('btnIn').style.backgroundColor = '#ccc';
+        }
+
+        function clockOut() {
+            const timeNow = new Date().toLocaleTimeString();
+            document.getElementById('clockOutStatus').innerText = `Clocked Out at ${timeNow}`;
+            document.getElementById('clockOutStatus').style.color = '#28a745';
+            document.getElementById('btnOut').disabled = true;
+            document.getElementById('btnOut').style.backgroundColor = '#ccc';
+        }
+
+        function submitForm(event) {
+            event.preventDefault(); // Prevents page refresh for testing
+            alert("Daily report submitted successfully!");
+            // In the future, PHP form submission logic goes here.
+        }
+
+        function logout() {
+            alert("Logging out...");
+            window.location.href = 'index.html'; 
+        }
+    </script>
 </body>
 </html>

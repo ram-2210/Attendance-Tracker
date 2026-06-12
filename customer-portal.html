@@ -4,19 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Portal</title>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* --- COMBINED CSS --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        h2, h3 { color: #2c3e50; margin-top: 0; }
+        hr { border: 0; height: 1px; background: #e0e0e0; margin: 20px 0; }
+        
+        label { display: block; font-weight: bold; margin: 15px 0 5px; color: #555; }
+        input[type="text"], select, textarea {
+            width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc;
+            border-radius: 6px; box-sizing: border-box; font-family: inherit;
+        }
+        textarea { resize: vertical; }
+        
+        button {
+            width: 100%; padding: 12px; background-color: #28a745; color: white;
+            border: none; border-radius: 6px; cursor: pointer; font-size: 16px;
+            font-weight: bold; transition: background-color 0.3s ease; margin-top: 10px;
+        }
+        button:hover { background-color: #218838; }
+        
+        .btn-secondary { background-color: #6c757d; }
+        .btn-secondary:hover { background-color: #5a6268; }
+        .btn-primary { background-color: #007bff; }
+        .btn-primary:hover { background-color: #0056b3; }
+        
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="flex-between">
             <h2>Customer Portal</h2>
-            <button onclick="logout()" class="btn-secondary" style="width: auto; padding: 5px 15px;">Logout</button>
+            <button onclick="logout()" class="btn-secondary" style="width: auto; padding: 8px 15px; margin-top: 0;">Logout</button>
         </div>
         
         <hr>
 
         <h3>Advance Order Request</h3>
-        <form id="orderForm">
+        <form onsubmit="submitRequest(event)">
             <label>Select Requirement:</label>
             <select id="serviceRequest" required>
                 <option value="">Choose an option...</option>
@@ -26,15 +66,15 @@
             </select>
 
             <label>Product Requirements & Details:</label>
-            <textarea rows="3" placeholder="Please specify the products you need..." required></textarea>
+            <textarea rows="4" placeholder="Please specify the products or services you need in advance..." required></textarea>
 
-            <button type="submit">Submit Request</button>
+            <button type="submit" class="btn-primary">Submit Request</button>
         </form>
 
         <hr>
 
-        <h3>Service Feedback</h3>
-        <form id="feedbackForm">
+        <h3 style="margin-top: 30px;">Service Feedback</h3>
+        <form onsubmit="submitFeedback(event)">
             <label>Rate your recent service:</label>
             <select id="rating" required>
                 <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
@@ -51,7 +91,24 @@
         </form>
     </div>
 
-    <script src="js/auth.js"></script>
-    <script src="js/customer-panel.js"></script>
+    <script>
+        /* --- COMBINED JAVASCRIPT --- */
+        function submitRequest(event) {
+            event.preventDefault();
+            alert("Your advance order has been requested successfully!");
+            event.target.reset(); // Clears the form
+        }
+
+        function submitFeedback(event) {
+            event.preventDefault();
+            alert("Thank you! Your feedback has been submitted.");
+            event.target.reset(); // Clears the form
+        }
+
+        function logout() {
+            alert("Logging out...");
+            window.location.href = 'index.html'; 
+        }
+    </script>
 </body>
 </html>
